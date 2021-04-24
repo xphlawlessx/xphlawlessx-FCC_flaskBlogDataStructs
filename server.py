@@ -1,16 +1,17 @@
-﻿from sqlite3 import Connection as SQLite3Connection
-from datetime import datetime
+﻿from datetime import datetime
+from sqlite3 import Connection as SQLite3Connection
+
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
-from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-
 
 # app
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sqlitedb.file"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = 0
+
 
 # configure sqlite3 to enforce foreign key contraints
 @event.listens_for(Engine, "connect")
@@ -23,6 +24,7 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
 
 db = SQLAlchemy(app)
 now = datetime.now()
+
 
 # models
 class User(db.Model):
@@ -69,21 +71,26 @@ def get_one_user(user_id):
 def delete_user(user_id):
     pass
 
+
 @app.route("/blog_post/<user_id>", methods=["POST"])
 def create_blog_post(user_id):
     pass
+
 
 @app.route("/blog_post/<blog_post_id>", methods=["GET"])
 def get_one_blog_post(blog_post_id):
     pass
 
+
 @app.route("/blog_post/numeric_body", methods=["GET"])
 def get_numeric_post_bodies():
     pass
 
+
 @app.route("/blog_post/delete_last_10", methods=["DELETE"])
 def delete_last_10():
     pass
+
 
 if __name__ == "__main__":
     app.run(debug=True)
