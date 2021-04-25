@@ -25,21 +25,28 @@ class LinkedList:
         self.tail.next_node = Node(data, None)
         self.tail = self.tail.next_node
 
+    def get_user_by_id(self, user_id):
+        node = self.head
+        while node:
+            # print(node.data['id'])
+            if node.data['id'] == int(user_id):
+                return node.data
+            node = node.next_node
+        return None
+
     def to_list(self):
         l = []
         if self.head is None:
             return l
         node = self.head
         while node:
-            l.append(node)
+            l.append(node.data)
             node = node.next_node
         return l
 
     def __str__(self):
         ll_str = ''
         node = self.head
-        if node is None:
-            print(None)
         while node:
             ll_str += f"{str(node.data)} ->"
             node = node.next_node
